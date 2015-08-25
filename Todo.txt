@@ -1,0 +1,8 @@
+New Features:
+
+[ ] Ability to choose a dimension that the date is tied to. This will process a filter application wide as opposed to just set a variable.
+[ ] Format HTML nicely using a bootstrap text field
+[ ] Dynamically apply filter as typing progresses
+[ ] Save value entered instead of it being dropped when enter pressed
+
+Bugs: 
