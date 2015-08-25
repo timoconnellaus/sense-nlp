@@ -7,3 +7,5 @@ Examples here: http://sugarjs.com/dates
 This extension is in early stages of development. Happy for anyone to contribute! :)
 
 Love Qlik Sense. New to javascript.
+
+See wiki on github for a todo list.
