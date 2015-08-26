@@ -1,12 +1,14 @@
 //credit to erikwett at branch.qlik.com. I used his extension as the basis for this http://branch.qlik.com/projects/showthread.php?396-qsVariable&highlight=qsvariable
 //I used his code because I liked the functionality of easily creating a variable
 
-define(["qlik", "http://sugarjs.com/release/current/sugar.min.js"], function(qlik, sugarjs) {
-
-
+define(["http://code.jquery.com/jquery-2.1.4.min.js", "qlik", "http://sugarjs.com/release/current/sugar.min.js"], function(jquery, qlik, sugarjs) {
+	
+	var val = "";
+	var dateTxt = "";
+	
 	return {
 		initialProperties : {
-			version : 1.0,
+			version : 0.1,
 			variableValue : {},
 			variableName : "",
 			render : "f",
@@ -30,7 +32,7 @@ define(["qlik", "http://sugarjs.com/release/current/sugar.min.js"], function(qli
 									change : function(data) {
 										//create variable - ignore errors
 										qlik.currApp().variable.create(data.variableName);
-										//data.variableValue.qStringExpression = '=' + data.variableName;
+										data.variableValue.qStringExpression = '=' + data.variableName;
 									}
 								}
 							}
@@ -41,16 +43,26 @@ define(["qlik", "http://sugarjs.com/release/current/sugar.min.js"], function(qli
 		},
 		paint : function($element, layout) {
 			var html = "", ext = this;
+			
+			html += '<input id="textbox_' + layout.variableName + '" style="width:95%;" type="text" value="' + val + '" /><br><div id="foundDate">' + layout.variableValue + '</div>';
+			//html += '<input id="textbox_' + layout.variableName + '" style="width:80%;" type="text"/>';
+			$element.html(html);
+			
+			$('#textbox_' + layout.variableName).on('input', function() {
+				val = $(this).val() + '';
+				dateTxt = Date.create(val).ddmmyyyy();
+				$("#foundDate").text(dateTxt + ' (Press enter to apply filter)');
+			});
+			
+			$('#textbox_' + layout.variableName).on("keypress", function(e) {
+					if (e.keyCode == 13) {
+						//alert("Enter pressed");
+						qlik.currApp(ext).variable.setContent(layout.variableName, dateTxt);
+						$("#foundDate").text(dateTxt);
+						return false; // prevent the button click from happening
+					}
+			});
 
-			html += '<input type="text"  />';
-				
-			$element.html(html).find('select, input').on('change', function() {
-				var val = $(this).val() + '';
-				var dateVal = Date.create(val);
-				var dateTxt = dateVal.ddmmyyyy();
-				qlik.currApp(ext).variable.setContent(layout.variableName, dateTxt);
-				
-			})
 		}
 	};
 
@@ -63,3 +75,5 @@ Date.prototype.ddmmyyyy = function() {
    var dd  = this.getDate().toString();
    return (dd[1]?dd:"0"+dd[0]) + "/" + (mm[1]?mm:"0"+mm[0]) + "/" + yyyy;
   };
+
+  
