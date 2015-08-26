@@ -47,7 +47,7 @@ define(["qlik", "http://sugarjs.com/release/current/sugar.min.js"], function(qli
 			$element.html(html).find('select, input').on('change', function() {
 				var val = $(this).val() + '';
 				var dateVal = Date.create(val);
-				var dateTxt = dateVal.yyyymmdd();
+				var dateTxt = dateVal.ddmmyyyy();
 				qlik.currApp(ext).variable.setContent(layout.variableName, dateTxt);
 				
 			})
@@ -57,9 +57,9 @@ define(["qlik", "http://sugarjs.com/release/current/sugar.min.js"], function(qli
 });
 
 //Credit to o-o on stack overflow for this function. http://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
-Date.prototype.yyyymmdd = function() {
+Date.prototype.ddmmyyyy = function() {
    var yyyy = this.getFullYear().toString();
    var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
    var dd  = this.getDate().toString();
-   return yyyy + "/" + (mm[1]?mm:"0"+mm[0]) + "/" + (dd[1]?dd:"0"+dd[0]); // padding
+   return (dd[1]?dd:"0"+dd[0]) + "/" + (mm[1]?mm:"0"+mm[0]) + "/" + yyyy;
   };
