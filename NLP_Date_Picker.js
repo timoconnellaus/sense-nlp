@@ -59,7 +59,7 @@ define(["http://code.jquery.com/jquery-2.1.4.min.js", "qlik", "http://sugarjs.co
 						//alert("Enter pressed");
 						qlik.currApp(ext).variable.setContent(layout.variableName, dateTxt);
 						$("#foundDate").text(dateTxt);
-						return false; // prevent the button click from happening
+						return false; // prevent the button click from happening.
 					}
 			});
 
