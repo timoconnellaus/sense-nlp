@@ -2,6 +2,6 @@
 	"name": "Natural Language Processing Date Picker",
 	"description": "Set a variable to a date using NLP",
 	"type": "visualization",
-	"version": 1,
+	"version": 0.2,
 	"author": "Tim O'Connell"
 }
